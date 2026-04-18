@@ -27,6 +27,16 @@ jobs:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/lab-github-actions:latest
+          
+      - name: Build y push imagen
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/lab-github-actions:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/lab-github-actions:${{ github.sha }}
+          
 
   test:
     name: Test
